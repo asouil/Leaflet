@@ -284,20 +284,13 @@
 			var lon = 2.4771762;
 			var macarte = null;
             var markerClusters; // Servira à stocker les groupes de marqueurs
-            // Nous initialisons une liste de marqueurs
-            var villes = {
-                "AURILLAC": { "latitude": 44.927008, "longitude": 2.448084 },
-                "CLERMONT-FERRAND": { "latitude": 45.758811, "longitude": 3.129791 },
-                "LE PUY EN VELAY": { "latitude": 45.041847, "longitude": 3.881518 },
-                "SAINT FLOUR": { "latitude": 45.061804, "longitude": 3.107845 }
-            };
 
 			// Fonction d'initialisation de la carte
             function initMap() {
                 // Nous définissons le dossier qui contiendra les marqueurs
                 var iconBase = './images/';
 				// Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-                macarte = L.map('map').setView([lat, lon], 11);
+                macarte = L.map('map').setView([lat, lon], 8);
                 markerClusters = L.markerClusterGroup(); // Nous initialisons les groupes de marqueurs
                 // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
                 L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
@@ -307,7 +300,7 @@
                     maxZoom: 20
                 }).addTo(macarte);
                 // Nous parcourons la liste des villes
-                for (ville in villes) {
+                
 	                // Nous définissons l'icône à utiliser pour le marqueur, sa taille affichée (iconSize), sa position (iconAnchor) et le décalage de son ancrage (popupAnchor)
                     var myIcon = L.icon({
                         iconUrl: iconBase + "autres.png",
@@ -315,11 +308,7 @@
                         iconAnchor: [25, 50],
                         popupAnchor: [-3, -76],
                     });
-                    var marker = L.marker([villes[ville].latitude, villes[ville].longitude], { icon: myIcon }); 
-                    // pas de addTo(macarte), l'affichage sera géré par la bibliothèque des clusters
-                    marker.bindPopup(villes[ville]);
-                    markerClusters.addLayer(marker); // Nous ajoutons le marqueur aux groupes
-                }
+                    
                 for (i=0 ; i< coworking.length; i++) {
 	                // Nous définissons l'icône à utiliser pour le marqueur, sa taille affichée (iconSize), sa position (iconAnchor) et le décalage de son ancrage (popupAnchor)
                     var marker = L.marker([coworking[i].latitude, coworking[i].longitude], { icon: myIcon }); 
